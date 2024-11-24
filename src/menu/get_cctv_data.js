@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 const ERROR_MESSAGES = {
   FETCH: '데이터를 불러오는데 실패했습니다',
   NOT_FOUND: 'CCTV 정보를 찾을 수 없습니다',
-  SERVER: '서버 오류가 발생했습니다'
+  SERVER: '서버 오류가 발생했습니다',
+  INVALID_JSON: 'JSON 형식이 올바르지 않습니다'
 };
 
 function GetCCTVData({ cctvName }) {
@@ -12,30 +13,33 @@ function GetCCTVData({ cctvName }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!cctvName) return;
-
     const fetchCCTVData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+      if (!cctvName) return;
+      
+      setLoading(true);
+      setError(null);
 
-        const response = await fetch(`/api/cctv/${cctvName}`);
+      try {
+        const response = await fetch(`http://localhost:8080/api/data/${cctvName}`);
         
         if (!response.ok) {
-          if (response.status === 404) {
-            throw new Error(ERROR_MESSAGES.NOT_FOUND);
-          }
-          if (response.status >= 500) {
-            throw new Error(ERROR_MESSAGES.SERVER);
-          }
-          throw new Error(ERROR_MESSAGES.FETCH);
+          throw new Error(ERROR_MESSAGES.SERVER);
+        }
+
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error(ERROR_MESSAGES.INVALID_JSON);
         }
 
         const data = await response.json();
+        
+        if (!data) {
+          throw new Error(ERROR_MESSAGES.NOT_FOUND);
+        }
+
         setCctvData(data);
       } catch (err) {
-        setError(err.message);
-        console.error(err.message);
+        setError(err.message || ERROR_MESSAGES.FETCH);
       } finally {
         setLoading(false);
       }

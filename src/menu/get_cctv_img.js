@@ -34,7 +34,7 @@ function GetCCTVImg({ cctvName, imgName }) {
                 URL.revokeObjectURL(imgURL);
             }
         };
-    }, [imgName]);
+    }, [imgName, cctvName, imgURL]);
 
     return { imgURL, loading, error };
 }
