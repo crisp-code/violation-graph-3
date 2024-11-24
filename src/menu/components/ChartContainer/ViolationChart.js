@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import csv from 'csvtojson';
+import PropTypes from 'prop-types';
 
 const LoadingMessage = () => <p>로딩 중...</p>;
 
@@ -20,7 +21,7 @@ const Tooltip = ({ point }) => (
   </div>
 );
 
-const ViolationChart = () => {
+const ViolationChart = ({ data }) => {
   const [formattedData, setFormattedData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -70,7 +71,7 @@ const ViolationChart = () => {
   }, []);
 
   return (
-    <div style={{ height: 275, backgroundColor: 'transparent', padding: '5px', width: '100%' }}>
+    <div style={{ height: 270, backgroundColor: 'transparent', padding: '5px', width: '100%' }}>
       {isLoading ? (
         <LoadingMessage />
       ) : formattedData.length > 0 ? (
@@ -143,6 +144,13 @@ const ViolationChart = () => {
       )}
     </div>
   );
+};
+
+ViolationChart.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+    date: PropTypes.string.isRequired,
+    violationCount: PropTypes.number.isRequired
+  })).isRequired
 };
 
 export default ViolationChart;

@@ -3,7 +3,7 @@ import React from 'react';
 const NationalStatus = () => {
   return (
     <div className="national-status" style={{ 
-      height: '250px', 
+      height: '270px', 
       display: 'flex', 
       justifyContent: 'center', 
       alignItems: 'center',
