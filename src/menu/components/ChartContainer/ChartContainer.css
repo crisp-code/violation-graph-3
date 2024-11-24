@@ -1,0 +1,30 @@
+.container {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chart-section {
+  width: 100%;
+  height: 285px;
+  background-color: #f0f2f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  transition: all 0.3s ease;
+}
+
+.list-section {
+  width: 100%;
+  background-color: #f0f2f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  transition: all 0.3s ease;
+}
