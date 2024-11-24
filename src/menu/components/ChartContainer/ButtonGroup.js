@@ -23,6 +23,12 @@ const ButtonGroup = ({ setView }) => {
             >
                 위반 항목
             </button>
+            <button 
+                className={activeButton === 'national' ? 'active' : ''} 
+                onClick={() => handleClick('national')}
+            >
+                전국 현황
+            </button>
         </div>
     );
 };

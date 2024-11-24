@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ViolationChart from './ViolationChart';
 import ViolationList from './ViolationList';
+import NationalStatus from './NationalStatus';
 import ButtonGroup from './ButtonGroup';
 import './ChartContainer.css';
 import { parseViolationData } from '../../utils';
@@ -29,19 +30,32 @@ const ChartContainer = () => {
     violationCount,
   }));
 
+  const renderContent = () => {
+    switch(view) {
+      case 'chart':
+        return (
+          <div className="chart-section">
+            <ViolationChart data={chartData} />
+          </div>
+        );
+      case 'list':
+        return (
+          <div className="list-section">
+            <ViolationList />
+          </div>
+        );
+      case 'national':
+        return <NationalStatus />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="container">
       <ButtonGroup setView={setView} />
       <div className="content-wrapper">
-        {view === 'chart' ? (
-          <div className="chart-section">
-            <ViolationChart data={chartData} />
-          </div>
-        ) : (
-          <div className="list-section">
-            <ViolationList />
-          </div>
-        )}
+        {renderContent()}
       </div>
     </div>
   );
