@@ -1,22 +1,30 @@
-import React from 'react';
-import { Button, ButtonGroup as BootstrapButtonGroup } from 'react-bootstrap';
+import React, { useState } from 'react';
 import './ButtonGroup.css';
 
-const ButtonItem = ({ variant, onClick, children }) => (
-  <Button variant={variant} onClick={onClick}>
-    {children}
-  </Button>
-);
+const ButtonGroup = ({ setView }) => {
+    const [activeButton, setActiveButton] = useState('chart');
 
-const ButtonGroup = ({ setView }) => (
-  <BootstrapButtonGroup className="mb-3">
-    <ButtonItem variant="primary" onClick={() => setView('chart')}>
-      전체 위반
-    </ButtonItem>
-    <ButtonItem variant="secondary" onClick={() => setView('list')}>
-      위반 항목
-    </ButtonItem>
-  </BootstrapButtonGroup>
-);
+    const handleClick = (view) => {
+        setActiveButton(view);
+        setView(view);
+    };
+
+    return (
+        <div className="button-group">
+            <button 
+                className={activeButton === 'chart' ? 'active' : ''} 
+                onClick={() => handleClick('chart')}
+            >
+                전체 위반
+            </button>
+            <button 
+                className={activeButton === 'list' ? 'active' : ''} 
+                onClick={() => handleClick('list')}
+            >
+                위반 항목
+            </button>
+        </div>
+    );
+};
 
 export default ButtonGroup;
